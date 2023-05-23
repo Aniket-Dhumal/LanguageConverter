@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Translation Web App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .fish-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .fish {
+            position: absolute;
+            font-size: 24px;
+            color: #fff;
+            white-space: nowrap;
+            animation: fishMovement 10s linear infinite;
+        }
+
+        @keyframes fishMovement {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fish-container">
+        {% for language in random_languages %}
+            <div class="fish">{{ language }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="container">
+        <h1>Translation Web App</h1>
+
+        <form action="/translate" method="POST">
+            <div class="form-group">
+                <label for="original_text">Input Text:</label>
+                <textarea class="form-control" id="original_text" name="original_text" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="from_language">From Language:</label>
+                <select class="form-control" id="from_language" name="from_language" required>
+                    {% for language in language_list %}
+                        <option value="{{ language }}">{{ language }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="to_language">To Language:</label>
+                <select class="form-control" id="to_language" name="to_language" required>
+                    {% for language in language_list %}
+                        <option value="{{ language }}">{{ language }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Translate</button>
+        </form>
+
+        <div id="translation_result" class="mt-4">
+            {% if translated_text %}
+                <h3>Translated Text:</h3>
+                <div>{{ translated_text }}</div>
+                <div class="mt-3">
+                    <button class="btn btn-primary" onclick="copyText()">Copy to Clipboard</button>
+                    <a class="btn btn-primary" href="/download?translated_text={{ translated_text }}">Download as Text File</a>
+                </div>
+            {% endif %}
+
+            {% if error_message %}
+                <div class="alert alert-danger mt-3">{{ error_message }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function copyText() {
+            const translationText = document.getElementById("translation_result").innerText;
+            navigator.clipboard.writeText(translationText);
+            alert("Text copied to clipboard!");
+        }
+    </script>
+
+</body>
+</html>
