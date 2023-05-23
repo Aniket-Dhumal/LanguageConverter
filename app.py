@@ -10,9 +10,13 @@ language_list = list(languages.values())
 import random
 
 @app.route('/')
+@app.route('/index.html')
 def home():
     random_languages = random.sample(language_list, 50)
     return render_template('index.html', language_list=language_list, random_languages=random_languages)
+@app.route('/aboutus.html')
+def aboutus():
+    return render_template('aboutus.html')
 
 
 @app.route('/translate', methods=['POST'])

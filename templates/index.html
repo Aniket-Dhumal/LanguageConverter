@@ -20,14 +20,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home</a>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">ConvertNow</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About Us</a>
+            <a class="nav-link" href="aboutus.html">About Us</a>
           </li>
         </ul>
       </div>
@@ -47,7 +44,7 @@
           </select>
         </div>
         <div class="w-1/2">
-          <label for="to_language" class="text-lg">Translate to:</label>
+          <label for="to_language" class="text-lg mx-3">Translate to:</label>
           <select name="to_language" id="to_language" class="border rounded mx-3 py-2 px-3 w-full">
             {% for language in language_list %}
             <option value="{{ language }}">{{ language }}</option>
